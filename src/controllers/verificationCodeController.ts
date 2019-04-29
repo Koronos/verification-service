@@ -1,7 +1,8 @@
 import * as express from "express";
 import { VerificationCode } from "../entities/VerificationCode";
 import verificationCodeGeneratorService from "../services/verificationCodeGeneratorService";
-import verificationCodeSender from "../services/VerificationCodeSender";
+import messageSenderService from "../services/messageSenderService";
+import { validationResult } from "express-validator/check";
 
 /**
  * Register a user by phone number
@@ -11,38 +12,27 @@ import verificationCodeSender from "../services/VerificationCodeSender";
  */
 export let create = async (req: express.Request, res: express.Response) => {
     // Validate request
-    req.assert("phoneNumber", "phoneNumber is required").not().isEmpty();
-    req.assert("phoneNumber", "phoneNumber is not valid").isMobilePhone("en-US");
-    const phoneNumber = req.sanitize("phoneNumber").ltrim(" -");
+    const errors = validationResult(req);
 
-    const errors = req.validationErrors();
-
-    if (errors) {
-        res.status(400).json(errors);
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors.array());
     }
 
-    VerificationCode.findAll({
-        where: {
-            userId: res.app.locals.user.id,
-        }
-    });
-
+    // TODO: delete other verification codes
     // Create verificationCode
-    const verificationCode = new VerificationCode();
-
-    verificationCode.userId = res.app.locals.user.id;
-    verificationCode.code = await verificationCodeGeneratorService.generateUniqueCode();
-
-    const created = await VerificationCode.create(verificationCode);
-
-    verificationCodeSender.sendNotification({
-        code: created.code,
-        phoneNumber: phoneNumber
+    const verificationCode = await VerificationCode.create({
+        userId: res.app.locals.user.id,
+        code: await verificationCodeGeneratorService.generateUniqueCode(),
+        phoneNumber: req.body.phoneNumber
     });
 
-    res.send({
-        verificationCode: created.code
+    // Notify code
+    messageSenderService.sendNotification({
+        message: `Hi! Your verification code for Rever is ${verificationCode.code}`,
+        phoneNumber: verificationCode.phoneNumber
     });
+
+    res.status(201).send("");
 };
 
 /**
@@ -51,8 +41,23 @@ export let create = async (req: express.Request, res: express.Response) => {
  * @param req
  * @param res
  */
-export let resend = (req: express.Request, res: express.Response) => {
-    res.send("resend");
+export let resend = async (req: express.Request, res: express.Response) => {
+    const verificationCode = await VerificationCode.findOne({
+        where: {
+            userId: res.app.locals.user.id
+        }
+    });
+
+    if (!verificationCode) {
+        return res.status(404).send("Verification code is not set");
+    }
+
+    messageSenderService.sendNotification({
+        message: `Hi! Your verification code for Rever is ${verificationCode.code}`,
+        phoneNumber: verificationCode
+    });
+
+    res.send("");
 };
 
 
@@ -62,20 +67,20 @@ export let resend = (req: express.Request, res: express.Response) => {
  * @param {e.Request} req
  * @param {e.Response} res
  */
-export let verify = (req: express.Request, res: express.Response) => {
-    req.assert("verificationCode", "verificationCode is required").not().isEmpty();
+export let verify = async (req: express.Request, res: express.Response) => {
+    const errors = validationResult(req);
 
-    const errors = req.validationErrors();
-
-    if (errors) {
-        res.status(400).json(errors);
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors.array());
     }
 
-    const verificationCode = VerificationCode.findOne({
+    const verificationCode = await VerificationCode.findOne({
         where: {
-            code: req.body.verificationCode
+            code: `${req.body.verificationCode}`
         }
     });
+
+    console.log(verificationCode);
 
     verificationCode ? res.status(200).send("") : res.status(404).send("Verification code not found");
 };

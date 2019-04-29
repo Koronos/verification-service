@@ -8,7 +8,7 @@ export class VerificationCodeGeneratorService {
         while (isRegistered) {
             const verificationCodes = await VerificationCode.findAll({
                 where: {
-                    "verificationCode": randomNumber
+                    "code": randomNumber
                 }
             });
             isRegistered = verificationCodes.length > 0;
