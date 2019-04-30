@@ -11,7 +11,7 @@ import FakeUser from "../models/FakeUser";
  */
 export default (req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (req.headers["x-auth"]) {
-        res.app.locals.user = new FakeUser("fake-uuid");
+        res.app.locals.user = new FakeUser(<string> req.headers["x-auth"]);
         return next();
     }
 

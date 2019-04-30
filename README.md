@@ -2,15 +2,25 @@
 
 This project was a seeded with [Microsoft Typescript Template](https://github.com/Microsoft/TypeScript-Node-Starter.git), updated and cleaned.
 
+- [Phone checker service](#phone-checker-service)
+- [Run the project](#run-the-project)
+  - [Pre-reqs](#pre-reqs)
+  - [Getting started](#getting-started)
+- [Project Structure](#project-structure)
+
+[Algorithms](resources/docs/algorithms.md)
+[Api description](resources/docs/api.md)
+[Testing](resources/docs/testing.md)
+
 # Run the project
 
 The project uses Sqlite and [Sequelize](http://docs.sequelizejs.com/) as database to make it portable, and thanks to Sequelize we can change the database for other more... "persistent".
 
-# Pre-reqs
+## Pre-reqs
 To build and run this app locally you will need:
 - Install [Node.js](https://nodejs.org/en/)
 
-# Getting started
+## Getting started
 - Clone the repository
 ```
 git clone --depth=1 https://github.com/Koronos/verification-service
@@ -24,60 +34,13 @@ npm install
 npm run build
 npm start
 ```
-# Testing
 
-Tests are based in [SuperTest](https://github.com/visionmedia/supertest) and [Jest](https://jestjs.io/en/)
-
-```
-npm run test
-```
-
-# Api description
-
-The service was created in base an HTTP Api Rest, but in this case I had to format the service as verbs because isn't fit as CRUD resource.
-
-
-| Endpoint                    | Description                                      | Params                                          |
-| --------------------------- | ------------------------------------------------ | ----------------------------------------------- |
-| **POST** /verification-code | Creates a verification code for the current user | **phoneNumber** *Required*: A real phone number |
-**201**: verification code created
-**400**: phoneNumber invalid
-
-
-> **POST** /verification-code
-
-Creates a verification code for the current user
-
-```js
-// Params
-{
-    "phoneNumber": ""
-}
-```
-
-**200**: verificationCode created correctly and sended
-**400**: verificationCode is invalid
-**404**: The user actually doesn't have a verificationCode
-
-> **POST** /verification-code/send
-
-Resend the verification code for the current user
-
-```js
-// Params
-Not required
-```
-
-**200**: verificationCode created correctly and sended
-**400**: verificationCode is invalid
-**404**: The user actually doesn't have a verificationCode
-
-## Project Structure
-Copy - from seed... forgive me
+# Project Structure
 
 The full folder structure of this app is explained below:
 
-> **Note!** Make sure you have already built the app using `npm run build`
+> **Note** Make sure you have already built the app using `npm run build`
+> **Note 2** In general is a copy paste from seed
 
 | Name                | Description                                                                                             |
 | ------------------- | ------------------------------------------------------------------------------------------------------- |
