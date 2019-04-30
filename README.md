@@ -2,28 +2,25 @@
 
 This project was a seeded with [Microsoft Typescript Template](https://github.com/Microsoft/TypeScript-Node-Starter.git), updated and cleaned.
 
-- [Phone checker service](#phone-checker-service)
+Why Typescript?, because helps a lot to simplify the creation of code OOP in javascript. In this code I use both. Complex logic is created purely in classes like the [MessageSender](src/services/messageSenderService.ts). Common flow as routing and controllers was created in functional programming.
+
 - [Run the project](#run-the-project)
   - [Pre-reqs](#pre-reqs)
   - [Getting started](#getting-started)
 - [Project Structure](#project-structure)
 
-[Algorithms](resources/docs/algorithms.md)
-[Api description](resources/docs/api.md)
-[Testing](resources/docs/testing.md)
-
-# Run the project
+## Run the project
 
 The project uses Sqlite and [Sequelize](http://docs.sequelizejs.com/) as database to make it portable, and thanks to Sequelize we can change the database for other more... "persistent".
 
-## Pre-reqs
+### Pre-reqs
 To build and run this app locally you will need:
 - Install [Node.js](https://nodejs.org/en/)
 
-## Getting started
+### Getting started
 - Clone the repository
 ```
-git clone --depth=1 https://github.com/Koronos/verification-service
+git clone https://github.com/Koronos/verification-service
 ```
 - Install dependencies
 ```
@@ -35,7 +32,7 @@ npm run build
 npm start
 ```
 
-# Project Structure
+## Project Structure
 
 The full folder structure of this app is explained below:
 
@@ -60,4 +57,3 @@ The full folder structure of this app is explained below:
 | package.json        | File that contains npm dependencies as well as build scripts                                            |
 | tsconfig.json       | Config settings for compiling server code written in TypeScript                                         |
 | tslint.json         | Config settings for TSLint code style checking                                                          |
-

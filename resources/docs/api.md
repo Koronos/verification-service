@@ -23,8 +23,8 @@ Creates a verification code for the current user
 | phoneNumber | Yes      | Real or possible phone number | body  | "3314291803" |
 
 **Responses**
-**201**: verificationCode created
-**401**: x-auth header is not set
+**201**: verificationCode created\
+**401**: x-auth header is not set\
 **400**: phoneNumber is invalid
 
 #### **POST** /verification-code/notify
@@ -34,9 +34,9 @@ Resend the verification code for the current user
 > Params no required
 
 **Responses**
-**200**: verificationCode created correctly and sended
-**401**: x-auth header is not set
-**400**: verificationCode is invalid
+**200**: verificationCode created correctly and sended\
+**401**: x-auth header is not set\
+**400**: verificationCode is invalid\
 **404**: The user actually doesn't have a verificationCode
 
 #### **POST** /verification-code/verify
@@ -47,8 +47,8 @@ Resend the verification code for the current user
 | ---------------- | -------- | -------------------------- | ----- | ------- |
 | verificationCode | Yes      | 4 digits verification code | body  | 1234    |
 
-**Responses**
-**200**: verificationCode is valid for the current user and exist
-**401**: x-auth header is not set
-**400**: verificationCode is invalid
+**Responses**\
+**200**: verificationCode is valid for the current user and exist\
+**401**: x-auth header is not set\
+**400**: verificationCode is invalid\
 **404**: The verification code doesn't exist
