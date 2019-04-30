@@ -9,6 +9,10 @@ Why Typescript?, because helps a lot to simplify the creation of code OOP in jav
   - [Getting started](#getting-started)
 - [Project Structure](#project-structure)
 
+[Algorithms](resources/docs/algorithms.md)\
+[Api description](resources/docs/api.md)\
+[Testing](resources/docs/testing.md)
+
 ## Run the project
 
 The project uses Sqlite and [Sequelize](http://docs.sequelizejs.com/) as database to make it portable, and thanks to Sequelize we can change the database for other more... "persistent".
