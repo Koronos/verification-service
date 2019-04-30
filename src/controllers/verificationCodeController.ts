@@ -26,28 +26,22 @@ export let create = async (req: express.Request, res: express.Response) => {
     });
 
     // Create verificationCode
-    const verificationCode = await VerificationCode.create({
+    await VerificationCode.create({
         userId: res.app.locals.user.id,
         code: await verificationCodeGeneratorService.generateUniqueCode(),
         phoneNumber: req.body.phoneNumber
-    });
-
-    // Notify code
-    messageSenderService.sendNotification({
-        message: `Hi! Your verification code for Rever is ${verificationCode.code}`,
-        phoneNumber: verificationCode.phoneNumber
     });
 
     res.status(201).send("");
 };
 
 /**
- * Resend code
+ * Notify code vía messageSender service
  *
  * @param req
  * @param res
  */
-export let resend = async (req: express.Request, res: express.Response) => {
+export let notify = async (req: express.Request, res: express.Response) => {
     const verificationCode = await VerificationCode.findOne({
         where: {
             userId: res.app.locals.user.id
@@ -86,8 +80,6 @@ export let verify = async (req: express.Request, res: express.Response) => {
             userId: req.app.locals.user.id
         }
     });
-
-    console.log(verificationCode);
 
     verificationCode ? res.status(200).send("") : res.status(404).send("Verification code not found");
 };

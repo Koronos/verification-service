@@ -1,7 +1,7 @@
 {
   "name": "rephone",
   "version": "0.1.0",
-  "description": "A starting point for Node.js express apps with TypeScript",
+  "description": "A service to verify in several ways",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/TypeScript-Node-Starter"

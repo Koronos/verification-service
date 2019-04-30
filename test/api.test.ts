@@ -37,14 +37,14 @@ describe("Create Verification code", () => {
             (cb) => request(app).post("/verification-code").send({phoneNumber: "+521234567890"}).set("x-auth", "some").expect(400, cb),
         ], done);
     });
-    it("With valid phone should return 201 and a code", (done) => {
+    it("With valid phone should return 201", (done) => {
         async.series([
-            (cb) => request(app).post("/verification-code").send({phoneNumber: "3314290318"}).set("x-auth", "some").expect(201, cb),
-            (cb) => request(app).post("/verification-code").send({phoneNumber: "33-1429-0318"}).set("x-auth", "some").expect(201, cb),
-            (cb) => request(app).post("/verification-code").send({phoneNumber: "33 1429 0318"}).set("x-auth", "some").expect(201, cb),
-            (cb) => request(app).post("/verification-code").send({phoneNumber: "+523314290318"}).set("x-auth", "some").expect(201, cb),
-            (cb) => request(app).post("/verification-code").send({phoneNumber: "+52-33-1429-0318"}).set("x-auth", "some").expect(201, cb),
-            (cb) => request(app).post("/verification-code").send({phoneNumber: "+52 33 1429 0318"}).set("x-auth", "some").expect(201, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "3314291803"}).set("x-auth", "some").expect(201, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "33-1429-1803"}).set("x-auth", "some").expect(201, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "33 1429 1803"}).set("x-auth", "some").expect(201, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "+523314291803"}).set("x-auth", "some").expect(201, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "+52-33-1429-1803"}).set("x-auth", "some").expect(201, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "+52 33 1429 1803"}).set("x-auth", "some").expect(201, cb),
         ], done);
     });
 });
@@ -63,7 +63,7 @@ describe("Resend Verification code", () => {
         await VerificationCode.sync({force: true});
 
         return appRequest
-            .post("/verification-code/resend")
+            .post("/verification-code/notify")
             .set("x-auth", "some")
             .expect(404);
     });
@@ -77,12 +77,12 @@ describe("Resend Verification code", () => {
             .post("/verification-code")
             .set("x-auth", "some")
             .send({
-                phoneNumber: "3314290318"
+                phoneNumber: "3314291803"
             })
             .expect(201);
 
         return appRequest
-            .post("/verification-code/resend")
+            .post("/verification-code/notify")
             .set("x-auth", "some")
             .expect(200);
     });

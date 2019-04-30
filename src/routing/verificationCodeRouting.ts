@@ -7,7 +7,7 @@ const verificationCodeRouting = express.Router();
 
 verificationCodeRouting.use(fakeAuthMiddleware);
 verificationCodeRouting.post("/", verificationCodeForCreationRules, verificationCodeController.create);
-verificationCodeRouting.post("/resend", verificationCodeController.resend);
+verificationCodeRouting.post("/notify", verificationCodeController.notify);
 verificationCodeRouting.post("/verify", verificationCodeForVerifyRules, verificationCodeController.verify);
 
 export default verificationCodeRouting;
