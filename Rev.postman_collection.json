@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "1b4914ae-30b0-49b2-a626-fdf363e63d50",
+		"name": "Rev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Is Up",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create VerificationCode",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "something",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-auth",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phoneNumber\": \"+523314291803\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/verification-code",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verification-code"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notify VerificationCode",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "something",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-auth",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/verification-code/notify",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verification-code",
+						"notify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify VerificationCode",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "something",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-auth",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"verificationCode\": \"1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/verification-code/verify",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verification-code",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

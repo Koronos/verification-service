@@ -36,6 +36,8 @@ npm run build
 npm start
 ```
 
+- For easy test i have included a [Postman](https://www.getpostman.com/) collection, that have the 4 posible requests and have the x-auth header configured.
+
 ## Project Structure
 
 The full folder structure of this app is explained below:
