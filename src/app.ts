@@ -2,16 +2,9 @@ import express from "express";
 import compression from "compression";  // compresses requests
 import bodyParser from "body-parser";
 import lusca from "lusca";
-import dotenv from "dotenv";
 
 // Helper than catch async errors
 import "express-async-errors";
-
-// Load environment variables from .env file, where API keys and passwords are configured
-dotenv.config({path: ".env"});
-
-// Modules
-
 
 // Middlewares
 import verificationCodeRouting from "./routing/verificationCodeRouting";
