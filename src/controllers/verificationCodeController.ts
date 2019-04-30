@@ -18,7 +18,13 @@ export let create = async (req: express.Request, res: express.Response) => {
         return res.status(400).json(errors.array());
     }
 
-    // TODO: delete other verification codes
+    // Delete old verification codes
+    await VerificationCode.destroy({
+        where: {
+            userId: res.app.locals.user.id
+        }
+    });
+
     // Create verificationCode
     const verificationCode = await VerificationCode.create({
         userId: res.app.locals.user.id,
@@ -76,7 +82,8 @@ export let verify = async (req: express.Request, res: express.Response) => {
 
     const verificationCode = await VerificationCode.findOne({
         where: {
-            code: `${req.body.verificationCode}`
+            code: `${req.body.verificationCode}`,
+            userId: req.app.locals.user.id
         }
     });
 

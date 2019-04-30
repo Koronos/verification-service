@@ -1,6 +1,6 @@
 # Phone validator micro-service
 
-This project is a seeded with [Microsoft Typescript Template](https://github.com/Microsoft/TypeScript-Node-Starter.git), is the more complete and organized template than I know, could be a framework itself.
+This project is a seeded with [Microsoft Typescript Template](https://github.com/Microsoft/TypeScript-Node-Starter.git), updated and cleaned.
 
 # Run the project
 

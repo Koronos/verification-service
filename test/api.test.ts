@@ -28,14 +28,14 @@ describe("Create Verification code", () => {
             .set("x-auth", "some")
             .expect(400);
     });
-    it("With invalid phone should return 400", () => {
-        return request(app)
-            .post("/verification-code")
-            .send({
-                phoneNumber: "bad phone v:"
-            })
-            .set("x-auth", "some")
-            .expect(400);
+    it("With invalid phone should return 400", (done) => {
+        async.series([
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "badphone v:"}).set("x-auth", "some").expect(400, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "¿'sdasd sad "}).set("x-auth", "some").expect(400, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "0000000000"}).set("x-auth", "some").expect(400, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "1234567890"}).set("x-auth", "some").expect(400, cb),
+            (cb) => request(app).post("/verification-code").send({phoneNumber: "+521234567890"}).set("x-auth", "some").expect(400, cb),
+        ], done);
     });
     it("With valid phone should return 201 and a code", (done) => {
         async.series([
@@ -69,14 +69,17 @@ describe("Resend Verification code", () => {
     });
 
     it("If already created should return 200", async () => {
+        // Recreate database
+        await VerificationCode.sync({force: true});
+
         // Create a code
         await appRequest
             .post("/verification-code")
             .set("x-auth", "some")
             .send({
-                phoheNumber: "3355448877"
+                phoneNumber: "3314290318"
             })
-            .expect(200);
+            .expect(201);
 
         return appRequest
             .post("/verification-code/resend")
@@ -101,7 +104,7 @@ describe("Verify VerificationCode", () => {
 
     it("With invalid validationCode should return 400 test 1", () => {
         return request(app)
-            .post("/verification-code")
+            .post("/verification-code/verify")
             .send({
                 verificationCode: "asdassdad"
             })
@@ -110,7 +113,7 @@ describe("Verify VerificationCode", () => {
     });
     it("With invalid validationCode should return 400 test 2", () => {
         return request(app)
-            .post("/verification-code")
+            .post("/verification-code/verify")
             .send({
                 verificationCode: "874"
             })
@@ -119,7 +122,7 @@ describe("Verify VerificationCode", () => {
     });
     it("With invalid validationCode should return 400 test 3", () => {
         return request(app)
-            .post("/verification-code")
+            .post("/verification-code/verify")
             .send({
                 verificationCode: 784
             })
@@ -128,25 +131,47 @@ describe("Verify VerificationCode", () => {
     });
     it("With valid validationCode but doesn't exist should return 404", () => {
         return request(app)
-            .post("/verification-code")
+            .post("/verification-code/verify")
             .send({
                 verificationCode: "8748"
             })
             .set("x-auth", "some")
-            .expect(400);
+            .expect(404);
     });
-    it("With valid and existent validationCode should return 200", async () => {
+    it("With valid and existent validationCode but distinct userId should return 404", async () => {
+        // Recreate database
+        await VerificationCode.sync({force: true});
+
         const verificationCode = await VerificationCode.create({
+            phoneNumber: "3314298888",
             userId: "test",
             code: "1234"
         });
 
         return request(app)
-            .post("/verification-code")
+            .post("/verification-code/verify")
             .send({
                 verificationCode: verificationCode.code
             })
             .set("x-auth", "some")
-            .expect(200);
+            .expect(404);
+    });
+    it("With valid and existent validationCode but distinct userId should return 404", async () => {
+        // Recreate database
+        await VerificationCode.sync({force: true});
+
+        const verificationCode = await VerificationCode.create({
+            phoneNumber: "3314298888",
+            userId: "test",
+            code: "1234"
+        });
+
+        return request(app)
+            .post("/verification-code/verify")
+            .send({
+                verificationCode: verificationCode.code
+            })
+            .set("x-auth", "some")
+            .expect(404);
     });
 });
