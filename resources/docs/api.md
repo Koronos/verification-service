@@ -2,6 +2,7 @@
 
 - [Api description](#api-description)
   - [Auth](#auth)
+  - [Endpoints](#endpoints)
       - [**POST** /verification-code](#post-verification-code)
       - [**POST** /verification-code/notify](#post-verification-codenotify)
       - [**POST** /verification-code/verify](#post-verification-codeverify)
@@ -14,6 +15,8 @@ I manage the service as micro service, that depends of an singed user. Commonly 
 
 In this case, this system is simulated and you must to add a header "x-auth" with any string to be "logged" as user with that **userId**, this helps to simulate different users.
 
+## Endpoints
+
 #### **POST** /verification-code
 
 Creates a verification code for the current user
@@ -22,7 +25,7 @@ Creates a verification code for the current user
 | ----------- | -------- | ----------------------------- | ----- | ------------ |
 | phoneNumber | Yes      | Real or possible phone number | body  | "3314291803" |
 
-**Responses**
+**Responses**\
 **201**: verificationCode created\
 **401**: x-auth header is not set\
 **400**: phoneNumber is invalid
@@ -33,7 +36,7 @@ Resend the verification code for the current user
 
 > Params no required
 
-**Responses**
+**Responses**\
 **200**: verificationCode created correctly and sended\
 **401**: x-auth header is not set\
 **400**: verificationCode is invalid\
